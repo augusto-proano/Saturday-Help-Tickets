@@ -1,7 +1,6 @@
-'use strict'
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
-const db = require('../db');
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
+const db = require('../db')
 const Student = require('./students')
 
 const Test = db.define('test', {
@@ -15,6 +14,7 @@ const Test = db.define('test', {
   }
 })
 
+//Class Method:  Find all test with a score of 70 or more
 Test.passing = function() {
   return Test.findAll({
     where: {
@@ -25,10 +25,11 @@ Test.passing = function() {
   })
 }
 
-Test.findBySubject = function(type){
+//Class Method:  Find all tests for a particular subject
+Test.findBySubject = function(subject){
   return Test.findAll({
     where: {
-      type: type
+      subject: subject
     }
   })
 }

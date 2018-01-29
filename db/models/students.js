@@ -20,7 +20,7 @@ const Student = db.define('student', {
   fullName: {
     type: Sequelize.VIRTUAL,
     get() {
-      return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`;
+      return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`
     }
   }
 }, {
@@ -30,11 +30,12 @@ const Student = db.define('student', {
     student.lastName = `${student.lastName[0].toUpperCase()}${student.lastName.slice(1)}`
     }
   }
-});
+})
 
-Student.prototype.initials = function () {
-  return `${this.firstName[0]} ${this.lastName[0]}`;
+//Instance Method:  Manipulate 'firstName' and 'lastName' strings by return student initials
+Student.prototype.getInitials = function () {
+  return `${this.firstName[0]} ${this.lastName[0]}`
 }
 
-module.exports = Student;
+module.exports = Student
 
