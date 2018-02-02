@@ -33,6 +33,6 @@ Test.findBySubject = function(type){
   })
 }
 
-Test.belongsTo(Student)
+Test.belongsTo(Student, {as: 'student'})
 
 module.exports = Test

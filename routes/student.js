@@ -3,7 +3,7 @@ const Student = require('../db/models/students');
 
 router.get('/:studentId', function (req, res, next) {
   Student.findById(req.params.studentId)
-  .then(student => res.status(200).json(student))
+  .then(student => res.json(student))
   .catch(next)
 })
 
