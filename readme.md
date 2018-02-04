@@ -14,6 +14,7 @@ List of requirements
 Express - Using models and routes
 Defining Models
 
+*Run npm test and start working through 1)models tests, then 2) routes test* 
 _______
 
 Student Model:
