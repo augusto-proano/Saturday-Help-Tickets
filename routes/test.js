@@ -30,19 +30,15 @@ router.get('/subject/:subject', function (req, res, next) {
   .catch(next)
 })
 
-router.post('/:studentId', function(req, res, next) {
-  let studentInstance;
-  Student.findOne({
-    where: {
-      id: req.params.studentId
-    }
-  })
+router.post('/student/:studentId', function(req, res, next) {
+  Student.findById(req.params.studentId)
   .then(student => {
-    studentInstance = student
     return Test.create(req.body)
+    .then(test => {
+      return test.setStudent(student)
+    })
   })
   .then(test => {
-    test.setStudent(studentInstance)
     res.status(201).json(test)
   })
   .catch(next)
@@ -54,7 +50,7 @@ router.delete('/:id', function (req, res, next) {
       id: req.params.id
     }
   })
-  .then(() => res.send('deleted!'))
+  .then(()=> res.sendStatus(204))
   .catch(next)
 })
 
