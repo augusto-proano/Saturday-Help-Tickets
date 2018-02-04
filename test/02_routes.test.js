@@ -6,6 +6,7 @@ const app = require('../app');
 const agent = request.agent(app);
 
 const db = require('../db/db');
+const Promise = require('bluebird');
 const Student = require('../db/models/students');
 const Test = require('../db/models/tests');
 describe('Routes', () => {
@@ -14,7 +15,10 @@ describe('Routes', () => {
   });
 
   afterEach(() => {
-    return Student.truncate({ cascade: true });
+    return Promise.all([
+      Student.truncate({ cascade: true }),
+      Test.truncate({ cascade: true })
+    ]);
   });
 
   describe('Student Routes', () => {
@@ -111,11 +115,136 @@ describe('Routes', () => {
         return agent
           .delete(`/student/${charlie.id}`)
           .expect(204)
-          .expect(()=> {
-            return Student.findById(charlie.id)
-            .then(res => expect(res).to.equal(null))
+          .expect(() => {
+            return Student.findById(charlie.id).then(res =>
+              expect(res).to.equal(null)
+            );
+          });
+      });
+    });
+  });
+
+  describe('Test Routes', () => {
+    let funTest;
+    let badTest;
+    let hardTest;
+    let crayTest;
+    beforeEach(() => {
+      const creatingTests = [
+        {
+          subject: 'Tree-Climbing',
+          grade: 81
+        },
+        {
+          subject: 'Outdoor Wilderness Survival',
+          grade: 43
+        },
+        {
+          subject: 'Wind-Surfing',
+          grade: 85
+        },
+        {
+          subject: 'Outdoor Wilderness Survival',
+          grade: 66
+        }
+      ].map(data => Test.create(data));
+      return Promise.all(creatingTests).then(createdTests => {
+        funTest = createdTests[0];
+        badTest = createdTests[1];
+        hardTest = createdTests[2];
+        crayTest = createdTests[3];
+      });
+    });
+    afterEach(() => {
+      return Promise.all([
+        Student.truncate({ cascade: true }),
+        Test.truncate({ cascade: true })
+      ]);
+    });
+
+    describe('GET /test', () => {
+      it('retrieves all tests', () => {
+        return agent
+          .get('/test')
+          .expect(200)
+          .expect(res => {
+            expect(res.body).to.be.an.instanceOf(Array);
+            expect(res.body).to.have.length(4);
+          });
+      });
+    });
+
+    describe('GET /test/:id', () => {
+      it('gets the test instance by id', () => {
+        return agent
+          .get(`/test/${funTest.id}`)
+          .expect(200)
+          .expect(res => {
+            expect(res.body.subject).to.equal(funTest.subject);
+          });
+      });
+    });
+
+    describe('GET /test/passing', () => {
+      it('gets all the tests that are passing', () => {
+        return agent
+          .get('/test/passing')
+          .expect(200)
+          .expect(res => {
+            expect(res.body).to.be.an.instanceOf(Array);
+            expect(res.body).to.have.length(2);
+          });
+      });
+    });
+
+    describe('GET /test/subject/:subject', () => {
+      it('gets all the tests by subject', () => {
+        return agent
+          .get(`/test/subject/${badTest.subject}`)
+          .expect(200)
+          .expect(res => {
+            expect(res.body).to.be.an.instanceOf(Array);
+            expect(res.body).to.have.length(2);
+          });
+      });
+    });
+
+    describe('POST /test/student/:studentId', () => {
+      let student;
+      beforeEach(() => {
+        return Student.create({
+          firstName: 'Pepper',
+          lastName: 'Potts',
+          email: 'saltn@pepper.com'
+        }).then(newStudent => {
+          student = newStudent;
+        });
+      });
+      it('it creates a new Test instance for a student', () => {
+        return agent
+          .post(`/test/student/${student.id}`)
+          .send({
+            subject: 'Outdoor Wilderness Survival',
+            grade: 43
           })
-      })
-    })
+          .expect(201)
+          .expect('Content-Type', /json/)
+          .expect(res => {
+            expect(res.body.studentId).to.equal(student.id);
+          });
+      });
+    });
+    describe('DELETE /test/:id', () => {
+      it('deletes an instance of test by its id', () => {
+        return agent
+          .delete(`/test/${crayTest.id}`)
+          .expect(204)
+          .expect(() => {
+            return Test.findById(crayTest.id).then(res => {
+              expect(res).to.equal(null);
+            });
+          });
+      });
+    });
   });
 });
