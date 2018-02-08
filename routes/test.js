@@ -4,7 +4,7 @@ const Student = require('../db/models/students');
 
 router.get('/passing', function(req, res, next) {
   Test.passing()
-    .then(tests => res.status(200).json(tests))
+    .then(tests => res.json(tests))
     .catch(next);
 });
 
@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
   Test.findById(req.params.id)
-    .then(test => res.status(200).json(test))
+    .then(test => res.json(test))
     .catch(next);
 });
 
@@ -26,7 +26,7 @@ router.get('/subject/:subject', function(req, res, next) {
       subject: req.params.subject
     }
   })
-    .then(test => res.status(200).json(test))
+    .then(test => res.json(test))
     .catch(next);
 });
 
