@@ -52,7 +52,7 @@ describe('Routes', () => {
     });
 
     describe('GET /student', () => {
-      it('retrieves all the students', () => {
+      xit('retrieves all the students', () => {
         return agent
           .get('/student')
           .expect('Content-Type', /json/)
@@ -65,7 +65,7 @@ describe('Routes', () => {
     });
 
     describe('GET /student/:id', () => {
-      it('retrieves a single student by their id', () => {
+      xit('retrieves a single student by their id', () => {
         return agent
           .get(`/student/${pepper.id}`)
           .expect(200)
@@ -75,13 +75,13 @@ describe('Routes', () => {
           });
       });
 
-      it('returns a 404 error if student does not exist in DB', () => {
+      xit('returns a 404 error if student does not exist in DB', () => {
         return agent.get('/student/09432').expect(404);
       });
     });
 
     describe('POST /student', () => {
-      it('creates a new Student instance', () => {
+      xit('creates a new Student instance', () => {
         return agent
           .post('/student')
           .send({
@@ -98,7 +98,7 @@ describe('Routes', () => {
     });
 
     describe('PUT /student/:id', () => {
-      it('updates an instance of a student', () => {
+      xit('updates an instance of a student', () => {
         return agent
           .put(`/student/${pepper.id}`)
           .send({ firstName: 'Salty' })
@@ -111,7 +111,7 @@ describe('Routes', () => {
     });
 
     describe('DELETE /student/:id', () => {
-      it('deletes an instance of a student', () => {
+      xit('deletes an instance of a student', () => {
         return agent
           .delete(`/student/${charlie.id}`)
           .expect(204)
@@ -163,7 +163,7 @@ describe('Routes', () => {
     });
 
     describe('GET /test', () => {
-      it('retrieves all tests', () => {
+      xit('retrieves all tests', () => {
         return agent
           .get('/test')
           .expect(200)
@@ -175,7 +175,7 @@ describe('Routes', () => {
     });
 
     describe('GET /test/:id', () => {
-      it('gets the test instance by id', () => {
+      xit('gets the test instance by id', () => {
         return agent
           .get(`/test/${funTest.id}`)
           .expect(200)
@@ -186,7 +186,7 @@ describe('Routes', () => {
     });
 
     describe('GET /test/passing', () => {
-      it('gets all the tests that are passing', () => {
+      xit('gets all the tests that are passing', () => {
         return agent
           .get('/test/passing')
           .expect(200)
@@ -198,7 +198,7 @@ describe('Routes', () => {
     });
 
     describe('GET /test/subject/:subject', () => {
-      it('gets all the tests by subject', () => {
+      xit('gets all the tests by subject', () => {
         return agent
           .get(`/test/subject/${badTest.subject}`)
           .expect(200)
@@ -220,7 +220,7 @@ describe('Routes', () => {
           student = newStudent;
         });
       });
-      it('it creates a new Test instance for a student', () => {
+      xit('creates a new Test instance for a student', () => {
         return agent
           .post(`/test/student/${student.id}`)
           .send({
@@ -235,7 +235,7 @@ describe('Routes', () => {
       });
     });
     describe('DELETE /test/:id', () => {
-      it('deletes an instance of test by its id', () => {
+      xit('deletes an instance of test by its id', () => {
         return agent
           .delete(`/test/${crayTest.id}`)
           .expect(204)
