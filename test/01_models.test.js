@@ -45,7 +45,7 @@ describe('Models', function() {
         });
       });
 
-      it('requires `firstName`', () => {
+      xit('requires `firstName`', () => {
         student.firstName = null;
         return student.validate().then(
           () => {
@@ -55,7 +55,7 @@ describe('Models', function() {
         );
       });
 
-      it('requires `lastName`', () => {
+      xit('requires `lastName`', () => {
         student.lastName = null;
         return student.validate().then(
           () => {
@@ -65,7 +65,7 @@ describe('Models', function() {
         );
       });
 
-      it('requires `email`', () => {
+      xit('requires `email`', () => {
         student.email = null;
         return student.validate().then(
           () => {
@@ -75,7 +75,7 @@ describe('Models', function() {
         );
       });
 
-      it('requires `email` to be in an email form', () => {
+      xit('requires `email` to be in an email form', () => {
         student.email = 'hola world';
         return student.validate().then(
           () => {
@@ -94,7 +94,7 @@ describe('Models', function() {
 
     describe('options definition', () => {
       describe('`fullName` virtual field', () => {
-        it('returns the full name', () => {
+        xit('returns the full name', () => {
           expect(student.fullName).to.equal(`${firstName} ${lastName}`);
         });
       });
@@ -109,7 +109,7 @@ describe('Models', function() {
           });
         });
 
-        it('capitalizes the first letter of the first and last name before save to the DB', () => {
+        xit('capitalizes the first letter of the first and last name before save to the DB', () => {
           return newStudent.save().then(savedStudent => {
             expect(savedStudent.firstName).to.equal('Charles');
             expect(savedStudent.lastName).to.equal('Xavier');
@@ -121,7 +121,7 @@ describe('Models', function() {
 
     describe('instance methods', () => {
       describe('initials', () => {
-        it('should return the initials of a student', () => {
+        xit('should return the initials of a student', () => {
           return student.save().then(savedStudent => {
             expect(savedStudent.initials()).to.equal('P P');
           });
@@ -151,14 +151,14 @@ describe('Models', function() {
     });
 
     describe('attributes definition', () => {
-      it('includes `subject` and `grade` fields', () => {
+      xit('includes `subject` and `grade` fields', () => {
         return test.save().then(savedTest => {
           expect(savedTest.subject).to.equal('Tree-climbing');
           expect(savedTest.grade).to.equal(79);
         });
       });
 
-      it('requires `subject`', () => {
+      xit('requires `subject`', () => {
         test.subject = null;
         return test.validate().then(
           () => {
@@ -168,7 +168,7 @@ describe('Models', function() {
         );
       });
 
-      it('requires `grade`', () => {
+      xit('requires `grade`', () => {
         test.grade = null;
         return test.validate().then(
           () => {
@@ -192,7 +192,7 @@ describe('Models', function() {
       });
 
       describe('passing', () => {
-        it('should return the test instances that have grade greater than 70', () => {
+        xit('should return the test instances that have grade greater than 70', () => {
           return Test.passing().then(foundTests => {
             expect(foundTests).to.be.an.instanceOf(Array);
             expect(foundTests).to.have.length(3);
@@ -200,7 +200,7 @@ describe('Models', function() {
         });
       });
       describe('findBySubject', () => {
-        it('should return all instances by given subject', () => {
+        xit('should return all instances by given subject', () => {
           return Test.findBySubject('Outdoor Survival').then(foundTests => {
             expect(foundTests).to.be.an.instanceOf(Array);
             expect(foundTests).to.have.length(2);
@@ -210,7 +210,7 @@ describe('Models', function() {
     });
 
     describe('associations', () => {
-      it('belongs to a student', () => {
+      xit('belongs to a student', () => {
         const newStudent = Student.create({
           firstName: 'Pepper',
           lastName: 'Potts',
