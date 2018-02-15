@@ -95,6 +95,7 @@ describe('Models', function() {
     describe('options definition', () => {
       describe('`fullName` virtual field', () => {
         it('returns the full name', () => {
+          expect(student.fullName).to.not.equal(undefined);
           expect(student.fullName).to.equal(`${firstName} ${lastName}`);
         });
       });
@@ -131,7 +132,6 @@ describe('Models', function() {
     //end of `The Students model` describe block
   });
   describe('The `Test` model', function() {
-
     let test;
     let subject = 'Tree-climbing';
     let grade = 79;
