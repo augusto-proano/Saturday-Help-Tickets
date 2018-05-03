@@ -6,13 +6,19 @@ const db = require('./db/db');
 const Student = require('./routes/student');
 const Test = require('./routes/test');
 
-app.use(bodyParser.json());
 
+
+//Body Parser
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/student', Student);
+app.use('/test', Test);
+
+//Logging Middleware
 app.use(morgan('dev'));
 
-
+//Handler Error Middleware
 app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
